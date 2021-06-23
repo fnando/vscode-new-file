@@ -1,24 +1,10 @@
 {
-  "name": "new-file",
-  "displayName": "new-file",
-  "description": "Create new files without leaving the keyboard.",
-  "version": "0.0.0",
-  "engines": {
-    "vscode": "^1.57.0"
-  },
-  "repository": {
-    "url": "https://github.com/fnando/vscode-new-file"
-  },
-  "license": "MIT",
-  "publisher": "fnando",
-  "categories": [
-    "Other"
-  ],
   "activationEvents": [
     "onStartupFinished"
   ],
-  "main": "./dist/extension.js",
-  "icon": "icon.png",
+  "categories": [
+    "Other"
+  ],
   "contributes": {
     "commands": [
       {
@@ -28,23 +14,13 @@
     ],
     "keybindings": [
       {
+        "command": "new-file.run",
         "key": "ctrl+alt+n",
-        "mac": "cmd+alt+n",
-        "command": "new-file.run"
+        "mac": "cmd+alt+n"
       }
     ]
   },
-  "scripts": {
-    "vscode:prepublish": "yarn run package",
-    "compile": "webpack",
-    "watch": "webpack --watch",
-    "package": "webpack --mode production --devtool hidden-source-map",
-    "test-compile": "tsc -p ./",
-    "test-watch": "tsc -watch -p ./",
-    "pretest": "yarn run test-compile && yarn run lint",
-    "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
-  },
+  "description": "Create new files without leaving the keyboard.",
   "devDependencies": {
     "@types/glob": "^7.1.3",
     "@types/lodash": "^4.14.170",
@@ -64,5 +40,29 @@
     "vscode-test": "^1.5.2",
     "webpack": "^5.38.1",
     "webpack-cli": "^4.7.0"
-  }
+  },
+  "displayName": "new-file",
+  "engines": {
+    "vscode": "^1.57.0"
+  },
+  "icon": "icon.png",
+  "license": "MIT",
+  "main": "./dist/extension.js",
+  "name": "new-file",
+  "publisher": "fnando",
+  "repository": {
+    "url": "https://github.com/fnando/vscode-new-file"
+  },
+  "scripts": {
+    "compile": "webpack",
+    "lint": "eslint src --ext ts",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "pretest": "yarn run test-compile && yarn run lint",
+    "test": "node ./out/test/runTest.js",
+    "test-compile": "tsc -p ./",
+    "test-watch": "tsc -watch -p ./",
+    "vscode:prepublish": "yarn run package",
+    "watch": "webpack --watch"
+  },
+  "version": "0.0.1"
 }

@@ -5,7 +5,7 @@ All notable changes to the "new-file" extension will be documented in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
 to structure this file.
 
-## unreleased
+## v0.0.1
 
 - Add support for file/folder name directive replacement.
 
