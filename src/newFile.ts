@@ -8,6 +8,22 @@ import { DataSourceEntry } from "./DataSourceEntry";
 
 const disposable: vscode.Disposable[] = [];
 
+export function addReplacements(entry: string, date: Date): string {
+  const padNumber = (num: number) => num.toString().padStart(2, "0");
+
+  return entry
+    .replace(/(?<!%)%F/g, "%Y-%m-%d")
+    .replace(/(?<!%)%Y/g, date.getFullYear().toString())
+    .replace(/(?<!%)%m/g, padNumber(date.getMonth() + 1))
+    .replace(/(?<!%)%d/g, padNumber(date.getDate()))
+    .replace(/(?<!%)%H/g, padNumber(date.getHours()))
+    .replace(/(?<!%)%M/g, padNumber(date.getMinutes()))
+    .replace(/(?<!%)%S/g, padNumber(date.getSeconds()))
+    .replace(/(?<!%)%s/g, padNumber(Math.floor(date.getTime() / 1000)))
+    .replace(/(?<!%)%user/g, process.env.USER as string)
+    .replace(/%%/g, "%");
+}
+
 export function dispose() {
   disposable.forEach((item) => item.dispose());
 }
@@ -145,9 +161,11 @@ export function run() {
         return updateItems();
       }
 
+      const replacedPath = addReplacements(currentEntry.path, new Date());
+
       if (currentEntry.isDir) {
         try {
-          fs.mkdirSync(currentEntry.path, { recursive: true });
+          fs.mkdirSync(replacedPath, { recursive: true });
         } catch (error) {
           vscode.window.showErrorMessage("The directory could not be created.");
         }
@@ -157,9 +175,9 @@ export function run() {
       }
 
       try {
-        fs.mkdirSync(path.dirname(currentEntry.path), { recursive: true });
-        fs.writeFileSync(currentEntry.path, "");
-        await openFile(currentEntry.path);
+        fs.mkdirSync(path.dirname(replacedPath), { recursive: true });
+        fs.writeFileSync(replacedPath, "");
+        await openFile(replacedPath);
         panel.hide();
       } catch (error) {
         vscode.window.showErrorMessage("The file could not be created.");
